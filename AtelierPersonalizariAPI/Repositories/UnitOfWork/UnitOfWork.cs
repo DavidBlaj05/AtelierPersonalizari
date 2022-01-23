@@ -58,9 +58,37 @@ namespace AtelierPersonalizariAPI.Repositories.UnitOfWork
         }
 
 
-        public void Save()
+       /* public void Save()
         {
             _context.SaveChanges();
+        }*/
+        // Save
+        public bool Save()
+        {
+            //try
+            //{
+            return _context.SaveChanges() > 0;
+            //}
+            //catch(SqlException ex)
+            //{
+            //    Console.WriteLine(ex);
+            //}
+
+            // return false;
+        }
+
+        public async Task<bool> SaveAsync()
+        {
+            //try
+            //{
+            return await _context.SaveChangesAsync() > 0;
+            //}
+            //catch(SqlException ex)
+            //{
+            //    Console.WriteLine(ex);
+            //}
+
+            // return false;
         }
         public void Dispose()
         {

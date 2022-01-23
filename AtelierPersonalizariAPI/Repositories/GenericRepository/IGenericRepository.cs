@@ -27,9 +27,5 @@ namespace AtelierPersonalizariAPI.Repositories.GenericRepository
         // Find
         TEntity FindById(object id);
         Task<TEntity> FindByIdAsync(object id);
-
-        // Save
-        bool Save();
-        Task<bool> SaveAsync();
     }
 }

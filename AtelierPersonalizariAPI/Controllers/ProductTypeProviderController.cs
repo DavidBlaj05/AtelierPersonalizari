@@ -4,84 +4,70 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AtelierPersonalizariAPI.Repositories.UnitOfWork;
+using AtelierPersonalizariAPI.Models;
+using AtelierPersonalizariAPI.Models.DTOs;
 
 namespace AtelierPersonalizariAPI.Controllers
 {
-    public class ProductTypeProviderController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ProductTypeProviderController : ControllerBase
     {
-        // GET: ProductTypeProviderController
-        public ActionResult Index()
+        private readonly IUnitOfWork _unitOfWork;
+        public ProductTypeProviderController(IUnitOfWork unitOfWork)
         {
-            return View();
+            _unitOfWork = unitOfWork;
         }
 
-        // GET: ProductTypeProviderController/Details/5
-        public ActionResult Details(int id)
+
+        [HttpGet]
+        public async Task<List<ProductTypeProvider>> Get()
         {
-            return View();
+            List<ProductTypeProvider> list = await _unitOfWork.ProductTypeProviderRepository.GetAll();
+            return list;
         }
 
-        // GET: ProductTypeProviderController/Create
-        public ActionResult Create()
+        [HttpGet("{id}")]
+        public async Task<ProductTypeProvider> Get(Guid id)
         {
-            return View();
+            return await _unitOfWork.ProductTypeProviderRepository.FindByIdAsync(id);
         }
 
-        // POST: ProductTypeProviderController/Create
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async void Post(ProductTypeProviderDTO value)
         {
-            try
+            ProductTypeProvider model = new ProductTypeProvider()
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                DateCreated = DateTime.UtcNow,
+                Name = value.Name
+            };
+            await _unitOfWork.ProductTypeProviderRepository.CreateAsync(model);
+            _unitOfWork.Save();
         }
 
-        // GET: ProductTypeProviderController/Edit/5
-        public ActionResult Edit(int id)
+
+        [HttpPut("{id}")]
+        public async Task Put(Guid id, ProductTypeProviderDTO value)
         {
-            return View();
+            ProductTypeProvider model = await _unitOfWork.ProductTypeProviderRepository.FindByIdAsync(id);
+            if (value.Name != null)
+            {
+                model.Name = value.Name;
+                model.DateModified = DateTime.UtcNow;
+            }
+            _unitOfWork.ProductTypeProviderRepository.Update(model);
+            _unitOfWork.Save();
         }
 
-        // POST: ProductTypeProviderController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: ProductTypeProviderController/Delete/5
-        public ActionResult Delete(int id)
+        [HttpDelete("{id}")]
+        public async Task Delete(Guid id)
         {
-            return View();
-        }
-
-        // POST: ProductTypeProviderController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            ProductTypeProvider model = await _unitOfWork.ProductTypeProviderRepository.FindByIdAsync(id);
+            _unitOfWork.ProductTypeProviderRepository.Delete(model);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

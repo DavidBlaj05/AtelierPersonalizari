@@ -12,7 +12,9 @@ namespace AtelierPersonalizariAPI.Repositories.UnitOfWork
         GenericRepository<ProductTypeProvider> ProductTypeProviderRepository { get; }
         GenericRepository<ProductType> ProductTypeRepository { get; }
         GenericRepository<Product> ProductRepository { get; }
-        void Save();
+        //void Save();
+        bool Save();
+        Task<bool> SaveAsync();
         void Dispose();
     }
 }

@@ -23,7 +23,7 @@ namespace AtelierPersonalizariAPI.Repositories.GenericRepository
         // GetAll
         public async Task<List<TEntity>> GetAll()
         {
-            // select to the db 
+            // select to the db
             return await _table.AsNoTracking().ToListAsync();
         }
 
@@ -102,36 +102,6 @@ namespace AtelierPersonalizariAPI.Repositories.GenericRepository
 
             // another option
             // return await _table.FirstOrDefaultAsync(x=> x.Id.Equals(id));
-        }
-
-
-        // Save
-        public bool Save()
-        {
-            //try
-            //{
-            return _context.SaveChanges() > 0;
-            //}
-            //catch(SqlException ex)
-            //{
-            //    Console.WriteLine(ex);
-            //}
-
-            // return false;
-        }
-
-        public async Task<bool> SaveAsync()
-        {
-            //try
-            //{
-            return await _context.SaveChangesAsync() > 0;
-            //}
-            //catch(SqlException ex)
-            //{
-            //    Console.WriteLine(ex);
-            //}
-
-            // return false;
         }
     }
 }
