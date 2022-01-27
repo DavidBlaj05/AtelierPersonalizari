@@ -1,0 +1,19 @@
+<div class="form-froup row">
+    <label class="col-sm-2 col-form-label">Name:</label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" [(ngModel)]="productTypeName"
+        placeholder="Enter Name">
+    </div>
+    <label class="col-sm-2 col-form-label">ProductTypeProviderId:</label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" [(ngModel)]="productTypeProviderId"
+        placeholder="Enter ProductTypeProviderId">
+    </div>
+</div>
+
+<button (click)="addProductType()" *ngIf="productType.id==''" class="btn btn-primary">
+    Add
+</button>
+<button (click)="updateProductType()" *ngIf="productType.id!=''" class="btn btn-primary">
+    Update
+</button>

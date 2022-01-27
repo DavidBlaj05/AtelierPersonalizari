@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AtelierPersonalizariAPI.Data;
 using AtelierPersonalizariAPI.Models;
 using AtelierPersonalizariAPI.Repositories.GenericRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace AtelierPersonalizariAPI.Repositories.UnitOfWork
 {
@@ -58,37 +57,31 @@ namespace AtelierPersonalizariAPI.Repositories.UnitOfWork
         }
 
 
-       /* public void Save()
-        {
-            _context.SaveChanges();
-        }*/
         // Save
         public bool Save()
         {
-            //try
-            //{
-            return _context.SaveChanges() > 0;
-            //}
-            //catch(SqlException ex)
-            //{
-            //    Console.WriteLine(ex);
-            //}
-
-            // return false;
+            try
+            {
+                return _context.SaveChanges() > 0;
+            }
+            catch(DbUpdateException ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
         }
 
         public async Task<bool> SaveAsync()
         {
-            //try
-            //{
-            return await _context.SaveChangesAsync() > 0;
-            //}
-            //catch(SqlException ex)
-            //{
-            //    Console.WriteLine(ex);
-            //}
-
-            // return false;
+            try
+            {
+                return await _context.SaveChangesAsync() > 0;
+            }
+            catch(DbUpdateException ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
         }
         public void Dispose()
         {

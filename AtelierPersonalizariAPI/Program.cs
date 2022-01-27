@@ -15,11 +15,6 @@ namespace AtelierPersonalizariAPI
     {
         public static void Main(string[] args)
         {
-          //  IConfiguration config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-           // var options = new DbContextOptionsBuilder<AtelierPersonalizariContext>().UseSqlServer(config.GetConnectionString("DefaultConnection")).Options;
-           // using var db = new AtelierPersonalizariContext(options);
-           // db.Database.EnsureDeleted();
-          //  db.Database.EnsureCreated();
             CreateHostBuilder(args).Build().Run();
         }
 
